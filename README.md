@@ -1,67 +1,90 @@
-# 无名杀
+# hongda三国杀
 
-## 项目使用约定
+一个基于开源项目 **[无名杀 / noname](https://github.com/libnoname/noname)** 的定制版三国杀，部署在 **[hongda.app](https://hongda.app)**，主打**朋友点开链接、浏览器里零下载即玩**。
 
-本项目基于 GPL 3.0 协议开源，使用此项目时请遵守开源协议。  
-除此外，希望你在使用代码时已经了解以下额外说明：
-
-1. 打包、二次分发 **请保留代码出处**：<https://github.com/libnoname/noname>
-2. 请不要用于商业用途。
-
-## 快速启动
-
-### 环境要求
-
-> **提示：** 请参考 [本地文档](./docs/how-to-start.md) 或 [github文档](https://github.com/libnoname/noname/wiki/%E5%A6%82%E4%BD%95%E8%BF%90%E8%A1%8C%E6%97%A0%E5%90%8D%E6%9D%80%EF%BC%88%E7%A8%8B%E5%BA%8F%E5%91%98%E7%89%88%EF%BC%89) 配置环境。
-
-- [Node.js](https://nodejs.org/) ^20.19.0 || >=22.12.0
-- [pnpm](https://pnpm.io/) >= 9
-- Webview: Chromium >= 91 || Safari >=16.4.0 (暂不支持Firefox)
-
-### 安装依赖
-
-```bash
-pnpm install
-```
-
-### 启动
-
-```bash
-pnpm dev
-```
+> 私人朋友局自用的定制 fork，非商业用途。游戏引擎来自 libnoname/noname，遵循 GPL-3.0。
 
 ---
 
-贡献代码可阅读相关文档：
+## ✨ 我们做了哪些改动
 
-[Git 下载安装指南](https://github.com/libnoname/noname/wiki/Git%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97)
+相对上游 noname，本 fork 的自定义内容（均在 `apps/core/` 下）：
 
-[Github 桌面版客户端使用入门](https://docs.github.com/zh/desktop/overview/getting-started-with-github-desktop)
+### 启动与入口
+- **自定义启动页**：进站后先显示「单机模式 / 联机模式」两个大按钮（`noname/init/hongdaLanding.js`）
+- 浏览器标题改为 **hongda三国杀**，移除了启动时的 GPLv3 确认弹窗（许可见 `LICENSE`）
+- 隐藏了单机菜单里的原生「联机」入口（联机统一走自定义按钮）
 
-[如何提交代码到《无名杀》Github 仓库](https://github.com/libnoname/noname/wiki/%E5%A6%82%E4%BD%95%E6%8F%90%E4%BA%A4%E4%BB%A3%E7%A0%81%E5%88%B0%E3%80%8A%E6%97%A0%E5%90%8D%E6%9D%80%E3%80%8BGithub%E4%BB%93%E5%BA%93)
+### 联机体验
+- 点「联机模式」**自动连接到大厅**，无需手填服务器地址（`mode/connect.js` + `lib.hallURL`）
+- **进大厅前强制设置昵称 + 头像**，避免一桌都是「无名玩家」
+- **9 个朋友自定义头像**（照片）排在头像网格最前面
+- 武将/卡牌设置栏新增 **「全部开启 / 全部关闭」** 按钮（联机模式也可用）
 
-[《无名杀》项目 Pull Request 提交规范](https://github.com/libnoname/noname/wiki/%E3%80%8A%E6%97%A0%E5%90%8D%E6%9D%80%E3%80%8B%E9%A1%B9%E7%9B%AE-Pull-Request-%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83)
+### 界面与外观
+- 默认 **手杀(long2) 布局** + **ol** 卡牌/卡背/体力条样式（接近官方三国杀OL观感）
+- 玩家昵称更醒目（加大、加粗、金色描边）
+- 铁索连环的链子上移，避免挡住装备栏
 
-客户端下载戳这里：
+### 出牌特效（借鉴 FreeKill 思路，用 noname 自有机制实现）
+- 戏剧性的牌（南蛮/万箭/桃园/五谷/决斗/火攻/铁索）触发**中央大字横幅**
+- 补全**毒 / 冰**属性伤害粒子（原本只有火/雷）
+- **受击红光闪**、**卡牌落地金光脉冲**
+- 出牌时**可用手牌发光、不可用手牌变灰**
 
-安卓： <https://github.com/nonameShijian/noname-shijian-android/releases/tag/v1.6.8>
-
-PC:  <https://github.com/nonameShijian/noname/releases/tag/v1.75>
-
-网页端推荐使用 Chrome 系内核浏览器游玩，暂不支持 Firefox 浏览器
-
-请尽量保证游玩的 Chrome 系浏览器或手机 Webview 的`内核版本大于等于91`
+### 玩法与彩蛋
+- **出牌默认需手动点确认**（关闭 `auto_confirm`），不再一点就自动发出
+- **黄宇超** 自定义武将（神话包，蜀，4 血，技能 养锐 + 坚毅）
+- 新手向导结尾自定义联系方式
 
 ---
 
-最近有一伙人号称是《无名杀十周年》的开发团队，宣称《无名杀十周年》“全新无名杀，比旧版拥有更多武将，兼容更多扩展”，实际上:
+## 🚀 本地运行（开发）
 
-- 《无名杀十周年》（原《无名杀清瑶版》）由无名杀 v1.9.124 修改而来，属于无名杀的一种**Fork**，并非“全新无名杀”；且《无名杀十周年》开发团队**公然违反 GPL-3.0 协议**，详情请看[这里](https://github.com/github/dmca/blob/master/2023/09/2023-09-20-noname.md)、[这里](https://tieba.baidu.com/p/8623890806)以及[这里](https://tieba.baidu.com/p/8624582238)。
-- 《无名杀十周年》至今没有更新神典韦等新机制武将，且删除了部分无名杀的原创武将，导致《无名杀十周年》的武将数量远远不及无名杀前几个版本的武将数量；不仅如此，《无名杀十周年》自分裂后的部分武将源码依然来自无名杀和其他开发者开源的代码。
-- 《无名杀十周年》兼容扩展的方式是不更新本体数据，从而导致《无名杀十周年》仍然在用 1.9.124 版本的代码，无法兼容使用 1.10 以后功能的扩展；而且《无名杀十周年》开发团队在使用**大量**GPL-3.0 开源的代码后对生成产物进行了**混淆加密**，在**违反开源精神**的同时，也导致扩展稳定性极具下降，更容易出问题。
+环境：Node.js `^20.19.0 || >=22.12.0`，pnpm `>= 9`，Chromium ≥ 91 / Safari ≥ 16.4（不支持 Firefox）。
 
-《无名杀十周年》就是彻头彻尾的骗局，《无名杀十周年》的开发团队更是一群拿无名杀吸血的骗子，虽然号称“不忘初心”，却公然对最有资格论述无名杀创作初心的无名杀创始人进行侮辱谩骂，直接违背其制定的规则和开源精神，恶劣程度远超当初在多个无名杀社群“自立”的水叶之流。
+```bash
+pnpm install        # 安装依赖
+pnpm build          # 构建到 dist/
+pnpm serve          # 启动静态客户端服务 (默认 :8089)
+```
 
-先秦介子推曾言：“窃人之财，犹谓之盗，况贪天之功以为己力乎。”无名杀社区发展至今，正是因为有大量的开源代码进行参考，才能不断推陈出新。试想每个扩展开发者在成为一个扩展开发者之前，谁敢说没有大量参考社区内的源码？每个作品凝聚的都是大家的心血，而不是仅仅归属于个别人。我们相信：开放、共享、多元才是无名杀的初心，绝不是封闭、私藏与趋同。
+联机服务器（另开一个终端）：
 
-我们在此呼吁无名杀社区正确认识《无名杀十周年》开发团队的一些行为与做法，并希望《无名杀十周年》开发团队能反省迄今以来的所作所为。**自由开源**是无名杀社区的灵魂，希望各方都能够遵循这一精神。
+```bash
+pnpm -F @noname/server dev   # WebSocket 联机服务器 (默认 :8082)
+```
+
+浏览器打开 `http://localhost:8089` 即可。改完源码记得 `pnpm build` 重新构建；浏览器有 Service Worker 缓存，验证改动建议用**无痕窗口**。
+
+> 构建偶发 `ENOTEMPTY: dist/node_modules` 报错时，执行 `rm -rf apps/core/dist/node_modules` 再重新构建。
+
+---
+
+## 🌐 部署 / 开服（hongda.app）
+
+采用「**按需自托管**」：在一台机器上跑客户端 + 联机服务器，再用 **Cloudflare 命名隧道**把它发布到固定域名 `hongda.app`（朋友零下载、点链接即玩）。Mac 上一键启动：
+
+```bash
+bash launch-hongda.sh    # 后台启动 客户端+联机服务器+隧道, 打印网址
+bash stop-hongda.sh      # 停止 / 下线
+```
+
+只在脚本运行期间在线（机器需保持唤醒）。想要 7×24 常驻，可迁移到 VPS + Caddy（隧道凭证等私密配置不在本仓库内）。
+
+---
+
+## 🗂 项目结构（简）
+
+- `apps/core/` — 游戏本体（武将 `character/`、卡牌 `card/`、布局 `layout/`、引擎 `noname/`、模式 `mode/`）
+- `packages/server/` — 联机 WebSocket 服务器（`@noname/server`）
+- `packages/fs/` — 静态客户端服务器（`@noname/fs`，Fastify）
+- `launch-hongda.sh` / `stop-hongda.sh` / `play-online.sh` — 自托管脚本
+
+---
+
+## 🙏 致谢与许可
+
+- 游戏引擎与绝大部分内容来自 **[无名杀 noname](https://github.com/libnoname/noname)**（GPL-3.0）。打包、二次分发 **请保留代码出处**：<https://github.com/libnoname/noname>，并**请勿用于商业用途**。
+- 本 fork 同样基于 GPL-3.0 开源，许可见 [`LICENSE`](./LICENSE)。
+- 部分出牌特效设计参考了 **[FreeKill](https://github.com/Qsgs-Fans/FreeKill)**（仅借鉴思路，未使用其美术/音效资源）。
