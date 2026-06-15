@@ -328,6 +328,13 @@ const characters = {
 		img: "image/character/huangyuchao.jpg",
 		dieAudios: ["huangyuchao"],
 	},
+	liaozirong: {
+		sex: "male",
+		group: "qun",
+		hp: 4,
+		skills: ["chaofeng", "liaozirong_dengchang"],
+		img: "image/character/liaozirong.jpg",
+	},
 };
 
 export default characters;

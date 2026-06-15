@@ -5407,6 +5407,17 @@ export const Content: Record<string, ContentFuncByAll | ContentFuncsByAll> = {
 					game.modeSwapPlayer(player);
 				}
 				if (event.isMine()) {
+					// hongda三国杀：联机里若我没有任何有效响应/使用(autochoose为真，已算上武圣/八卦等技能)，
+					// 则4秒后自动放弃(=掉血)，不必干等满出牌时限。复用手动"取消"流程→不引入新的同步逻辑。
+					// 仅当仍在等待我响应该事件时才触发(若我已手动操作，事件已推进，cancel自动no-op)。
+					if (_status.connectMode && event.autochoose && event.autochoose()) {
+						const _respEvent = event;
+						setTimeout(() => {
+							if (_status.event === _respEvent && _status.paused) {
+								ui.click.cancel();
+							}
+						}, 4000);
+					}
 					if (event.hsskill && !event.forced && _status.prehidden_skills.includes(event.hsskill)) {
 						ui.click.cancel();
 						return;
@@ -8652,6 +8663,17 @@ export const Content: Record<string, ContentFuncByAll | ContentFuncsByAll> = {
 				}
 			} else {
 				if (event.isMine()) {
+					// hongda三国杀：联机里若我没有任何有效响应/使用(autochoose为真，已算上武圣/八卦等技能)，
+					// 则4秒后自动放弃(=掉血)，不必干等满出牌时限。复用手动"取消"流程→不引入新的同步逻辑。
+					// 仅当仍在等待我响应该事件时才触发(若我已手动操作，事件已推进，cancel自动no-op)。
+					if (_status.connectMode && event.autochoose && event.autochoose()) {
+						const _respEvent = event;
+						setTimeout(() => {
+							if (_status.event === _respEvent && _status.paused) {
+								ui.click.cancel();
+							}
+						}, 4000);
+					}
 					if (event.hsskill && !event.forced && _status.prehidden_skills.includes(event.hsskill)) {
 						ui.click.cancel();
 						return;

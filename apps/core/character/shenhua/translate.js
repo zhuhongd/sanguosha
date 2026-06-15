@@ -383,6 +383,11 @@ const translates = {
 	hyc_yangrui_info: "结束阶段开始时，若你已受伤，你可以回复1点体力。",
 	hyc_jianyi: "坚毅",
 	hyc_jianyi_info: "当你受到伤害后，你可以摸X张牌（X为伤害点数）。",
+	liaozirong: "廖梓荣",
+	chaofeng: "嘲讽",
+	chaofeng_info: "其他角色的结束阶段开始时，若该角色本回合内未对你使用过【杀】，则其须弃置一张手牌。",
+	liaozirong_dengchang: "登场",
+	liaozirong_dengchang_info: "游戏开始时，廖梓荣登场亮相。",
 };
 
 export default translates;

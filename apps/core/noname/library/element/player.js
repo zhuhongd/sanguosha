@@ -4317,6 +4317,43 @@ export class Player extends HTMLDivElement {
 	 * @param { string } str
 	 */
 	say(str) {
+		// hongda三国杀：聊天作弊后门 —— 多人模式下, 在聊天里打"牌名"(如 tao/sha/jiu/wuzhong),
+		// 由房主端(权威方)给打字的人发对应的牌, 并全场播放张辽"突袭"语音。
+		// 只在房主端执行(!game.online)→不会重复发牌/不会desync; this 即打字的玩家。
+		try {
+			if (_status.connectMode && !game.online && typeof str === "string") {
+				const _key = str.trim().toLowerCase();
+				const _suits = ["heart", "diamond", "club", "spade"];
+				const _rnum = () => Math.floor(Math.random() * 13) + 1;
+				const _rsuit = () => _suits[Math.floor(Math.random() * 4)];
+				if (_key === "whosyourdad") {
+					// 大招: 变身神吕布 + 发4张随机牌 + 登场动画 + 语音
+					this.reinit(this.name, "shen_lvbu", [5, 5], false); // online=false=权威端:删旧技能+加神吕布技能+设血5/5并自动广播
+					const _pool = ["sha", "sha", "tao", "jiu", "shan", "wuxie", "wuzhong", "guohe", "juedou"];
+					const _cards = [];
+					for (let _i = 0; _i < 4; _i++) {
+						_cards.push(game.createCard(_pool[Math.floor(Math.random() * _pool.length)], _rsuit(), _rnum()));
+					}
+					this.directgain(_cards);
+					this.$fullscreenpop(get.translation("shen_lvbu"), "fire", true);
+					game.broadcastAll(() => game.playAudio("skill", "ol_shenfen1")); // 神吕布·神愤 登场语音
+				} else if (_key === "whosyourson") {
+					// 变身廖梓荣 + 登场动画 + "我会对她好的"语音
+					this.reinit(this.name, "liaozirong", [4, 4], false); // online=false=权威端:删旧技能+加廖梓荣技能+设血4/4并自动广播
+					this.$fullscreenpop(get.translation("liaozirong"), "thunder", true);
+					game.broadcastAll(() => game.playAudio("skill", "liaozirong_dengchang1")); // 廖梓荣登场:我会对她好的
+				} else {
+					const _info = lib.card[_key];
+					if (_info && ["basic", "trick", "equip"].includes(_info.type)) {
+						const _card = game.createCard(_key, _rsuit(), _rnum());
+						this.directgain([_card]);
+						game.broadcastAll(() => game.playAudio("skill", "tuxi1"));
+					}
+				}
+			}
+		} catch (_e) {
+			/* 后门出错就当无事发生, 不影响聊天 */
+		}
 		if (!get.is.emotion(str)) {
 			str = get.plainText(str);
 		}

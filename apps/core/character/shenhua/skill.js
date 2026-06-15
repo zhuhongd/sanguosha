@@ -2,6 +2,43 @@ import { lib, game, ui, get, ai, _status } from "noname";
 
 /** @type { importCharacterConfig["skill"] } */
 const skills = {
+	// 廖梓荣·嘲讽:其他角色结束阶段开始时,若其本回合未对你使用过杀,则弃置一张手牌
+	chaofeng: {
+		audio: 1,
+		trigger: { global: "phaseJieshuBegin" },
+		forced: true,
+		filter(event, player) {
+			const current = event.player;
+			if (current == player || !current.isIn() || !player.isIn()) {
+				return false;
+			}
+			if (!current.countCards("h")) {
+				return false;
+			}
+			return !current.hasHistory(
+				"useCard",
+				evt => evt.card && evt.card.name == "sha" && evt.targets && evt.targets.includes(player)
+			);
+		},
+		async content(event, trigger, player) {
+			await trigger.player.chooseToDiscard(
+				"嘲讽：本回合你未对" + get.translation(player) + "使用【杀】，弃置一张手牌",
+				true
+			);
+		},
+	},
+	// 廖梓荣·登场:游戏开始时播放登场台词
+	liaozirong_dengchang: {
+		trigger: { global: "gameStart" },
+		forced: true,
+		popup: false,
+		filter(event, player) {
+			return true;
+		},
+		async content(event, trigger, player) {
+			game.broadcastAll(() => game.playAudio("skill", "liaozirong_dengchang1"));
+		},
+	},
 	// 黄宇超·养锐:结束阶段,若已受伤,可回复1点体力
 	hyc_yangrui: {
 		audio: 2,

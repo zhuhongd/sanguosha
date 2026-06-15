@@ -125,6 +125,7 @@ function showHongdaSetup() {
 		hongda_tonylil: "小Tony",
 		hongda_tonylil2: "小Tony2",
 		hongda_wangqian: "王谦",
+		hongda_liaozirong: "廖梓荣",
 	};
 	// 让游戏内名字查找也能显示自定义头像的名字
 	for (const id in CUSTOM_NAMES) {
@@ -135,7 +136,7 @@ function showHongdaSetup() {
 	// 头像可选项：自定义头像在前，其后是常用武将（均确认有头像图）
 	const AVATARS = [
 		"hongda_kevin", "hongda_yuchao", "hongda_hongda", "hongda_tonysensei", "hongda_wangqian",
-		"hongda_robin", "hongda_robin2", "hongda_tonylil", "hongda_tonylil2",
+		"hongda_robin", "hongda_robin2", "hongda_tonylil", "hongda_tonylil2", "hongda_liaozirong",
 		"caocao", "simayi", "xiahoudun", "guojia", "zhenji",
 		"liubei", "guanyu", "zhangfei", "zhugeliang", "zhaoyun",
 		"machao", "huangyueying", "sunquan", "zhouyu", "ganning",

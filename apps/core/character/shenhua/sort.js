@@ -1,5 +1,5 @@
 const characterSort = {
-	shenhua_feng: ["sp_zhangjiao", "re_yuji", "old_zhoutai", "old_caoren", "re_xiahouyuan", "xiaoqiao", "re_huangzhong", "re_weiyan", "huangyuchao"],
+	shenhua_feng: ["sp_zhangjiao", "re_yuji", "old_zhoutai", "old_caoren", "re_xiahouyuan", "xiaoqiao", "re_huangzhong", "re_weiyan", "huangyuchao", "liaozirong"],
 	shenhua_huo: ["dianwei", "xunyu", "pangtong", "sp_zhugeliang", "taishici", "yanwen", "re_yuanshao", "re_pangde"],
 	shenhua_lin: ["caopi", "re_xuhuang", "menghuo", "zhurong", "re_lusu", "sunjian", "dongzhuo", "jiaxu"],
 	shenhua_shan: ["dengai", "zhanghe", "liushan", "jiangwei", "zhangzhang", "sunce", "caiwenji", "zuoci"],
