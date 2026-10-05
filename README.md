@@ -61,16 +61,22 @@ pnpm -F @noname/server dev   # WebSocket 联机服务器 (默认 :8082)
 
 ---
 
-## 🌐 部署 / 开服（hongda.app）
+## 🌐 部署（sgs.hongda.app，7×24 常驻）
 
-采用「**按需自托管**」：在一台机器上跑客户端 + 联机服务器，再用 **Cloudflare 命名隧道**把它发布到固定域名 `hongda.app`（朋友零下载、点链接即玩）。Mac 上一键启动：
+现在完全跑在 **Cloudflare** 上，不再依赖任何人的电脑开机：
+
+- 本仓库的构建产物 `dist/` 作为静态文件托管（约 1.5 万个文件，在免费额度内）；
+- 联机大厅是 Cloudflare Durable Object，移植自 `packages/server`，协议完全一致；`lib.hallURL` 仍是 `wss://ws.hongda.app`（也可以用 `wss://sgs.hongda.app/lobby`，是同一个大厅）；
+- 网页版需要的文件接口（`/checkFile`、`/getFileList`……）由 Worker 只读提供。
+
+托管代码在 **[zhuhongd/hongda.app](https://github.com/zhuhongd/hongda.app)** 的 `sanguosha/` 目录，本仓库是那里的 git 子模块 `sanguosha/game`。更新游戏：
 
 ```bash
-bash launch-hongda.sh    # 后台启动 客户端+联机服务器+隧道, 打印网址
-bash stop-hongda.sh      # 停止 / 下线
+pnpm install && pnpm build   # 在本仓库里构建到 dist/
+cd .. && npm run deploy      # 在 hongda.app/sanguosha 里部署
 ```
 
-只在脚本运行期间在线（机器需保持唤醒）。想要 7×24 常驻，可迁移到 VPS + Caddy（隧道凭证等私密配置不在本仓库内）。
+旧的自托管脚本（`launch-hongda.sh` / `stop-hongda.sh` / `play-online.sh`，靠 Cloudflare 隧道）已经不需要了，留作参考。
 
 ---
 

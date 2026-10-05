@@ -1,15 +1,18 @@
 audio/*.TXT
 image/*.TXT
 
-extension/**
-!extension/boss/**
-!extension/cardpile/**
-!extension/coin/**
-!extension/3D精选/**
-!extension/杀海拾遗/**
-!extension/欢乐卡牌/**
-!extension/玩点论杀/**
-!extension/英雄杀/**
+# Only the built-in extensions are part of the game. (extension/** with !
+# exceptions never worked: git cannot re-include files inside an ignored
+# folder, so these were never committed.)
+extension/*
+!extension/boss/
+!extension/cardpile/
+!extension/coin/
+!extension/3D精选/
+!extension/杀海拾遗/
+!extension/欢乐卡牌/
+!extension/玩点论杀/
+!extension/英雄杀/
 
 dist
 dist-types
